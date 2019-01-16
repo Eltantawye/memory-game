@@ -1,0 +1,263 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+.deck {
+    width: 660px;
+    min-height: 680px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    background: #2e3d49;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.deck .card.open {
+    transform: rotateY(0);
+    background: #02b3e4;
+    cursor: default;
+    animation: pulse 0.4s ease infinite alternate;
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background: #02ccba;
+    font-size: 33px;
+    animation: 0.4s jump ease 2 alternate;
+}
+
+/*
+ * Styles for the Score Panel
+*/
+.score-panel {
+    text-align: left;
+    width: 380px;
+    margin-bottom: 10px;
+}
+
+.score-panel .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-panel .restart {
+    float: right;
+    cursor: pointer;
+}
+
+.timer {
+  margin-left: 20px;
+}
+
+.score {
+  margin-left: 20px;
+}
+
+/*style from www.w3schools.com */
+.overlay {
+ position: fixed; /* Stay in place */
+ z-index: 1; /* Sit on top */
+ left: 0;
+ top: 0;
+ width: 100%; /* Full width */
+ height: 100%; /* Full height */
+ overflow: auto; /* Enable scroll if needed */
+ background-color: rgb(0,0,0); /* Fallback color */
+ background-color: rgba(0,0,0,0.4);
+}
+
+.deck .card.not-matched {
+  background: #ea2027;
+  animation-name: wiggle;
+  animation-duration: 0.5s;
+}
+
+.popup {
+  z-index: 1;
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  background:#dfe4ea;
+  width: 33%;
+  height: auto;
+  text-align: center;
+  font-size: 1.5em;
+  color: #2f3542;
+  border-radius: 20px;
+  margin: 10% auto;
+  padding: 5px;
+  position: relative;
+  display: none;
+  box-shadow: 10px 5px 10px #000;
+  animation-name:animatetop;
+  animation-duration: 0.4s;
+}
+
+.popup h1 {
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  color: #2ed573;
+}
+
+.popBtn {
+  font-family: 'ZCOOL QingKe HuangYou', cursive;
+  background: #2ed573;
+  width: 30%;
+  height: 70px;
+  font-size: 1.2em;
+  color: #fff;
+  border-radius: 10px;
+}
+
+/* ANIMATIONS */
+/* popup message animation */
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* jump animation for matching */
+@keyframes jump {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+  100% {
+    transform: scale(1.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+  }
+}
+
+/* pulse animation for clicking */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 2px rgba(0,0,0,.2);
+    border-radius: 25%;
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 2px 2px rgba(0,0,0,.2);
+    border-radius: 40%;
+  }
+}
+
+/*wiggle animation for wrong cards */
+@keyframes wiggle {
+  0% {
+    transform: rotate(-3deg);
+    box-shadow: 0 2px 2px rgba(0,0,0,.2);
+  }
+  20% {
+    transform: rotate(20deg);
+  }
+  40% {
+    transform: rotate(-15deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  90% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0);
+    box-shadow: 0 2px 2px rgba(0,0,0,.2);
+  }
+}
+
+/* @media queries*/
+/* responsive on iphone 5s/6s ... and ipad */
+@media screen and (max-width: 700px ) {
+  .deck {
+    max-width: 320px;
+    min-height: auto;
+
+  }
+
+  .deck .card {
+    height: 60px;
+    width: 60px;
+    margin-bottom: 5px;
+  }
+
+  .score-panel {
+    max-width: 89%;
+    padding-bottom: 0;
+    text-align: center;
+  }
+
+  .popup {
+    width: 70%;
+    height: auto;
+    font-size: 0.9em;
+    margin: 50% auto;
+  }
+
+  .popBtn {
+    width: 60%;
+    height: 30px;
+    font-size: 0.9em
+  }
+  
+}
