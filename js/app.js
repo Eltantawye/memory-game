@@ -15,6 +15,7 @@ let timeIsActive = 0;
 let wrongMoves = 0;
 let clickedArr = [];
 let winCondition = 0;
+let clickCondition = true;
 // Store all classes in myList and gamesShapes array
 for(let i = 0 , Garr=0 ; i < myList.length ; i++){
   if(myList[i].className !== 'fa fa-star' &&myList[i].className !== 'fa fa-repeat'){
@@ -52,7 +53,7 @@ changeShapes(shuffledShapes);
 * user can not click on matched card or showen card
 */
 function checkCards(event){
-    if(event.target.nodeName ==='LI' && !event.target.classList.contains('match') && !event.target.classList.contains('show')){ // checking card
+    if(event.target.nodeName ==='LI' && !event.target.classList.contains('match') && !event.target.classList.contains('show') && clickCondition){ // checking card
       timerSpan(timeIsActive);
       let item = event.target.firstElementChild.className;
       //push clicked card classes into clickedArr
@@ -62,6 +63,7 @@ function checkCards(event){
       event.target.classList.toggle('show');
       // checking two cards
       if(clickedArr.length > 1){
+        clickCondition = false;
         let clickedCards=[];
         if(clickedArr[0] === clickedArr[1] && event.target.classList.contains('open')){
           ++moves;
@@ -72,6 +74,7 @@ function checkCards(event){
           for(let i = 0 ; i < clickedCards.length ; i++){
             clickedCards[i].parentElement.classList.add('match');
           }
+          clickCondition=true;
           winCondition++;
           clickedCards=[];
           if(winCondition === 8){
@@ -93,6 +96,7 @@ function checkCards(event){
           setTimeout(function(){
             firstCard.parentElement.classList.remove('open','show','not-matched');
             secondCard.parentElement.classList.remove('open','show','not-matched');
+            clickCondition=true;
           }, 1100);
         } // end else
         clickedArr=[];
@@ -120,7 +124,8 @@ function starCounter(wrongMvs){
     starsArr[i]=stars[i];
   }
   if(wrongMvs > 8 && starsArr.length > 1) {
-    starsArr[starsC].remove();
+    //fixed removing li item
+    starsArr[starsC].parentElement.remove();
     wrongMoves = 0;
     starsC++;
   }
@@ -144,11 +149,10 @@ function reset(){
     scorePanel(moves ,score);
     shuffle(shuffledShapes);
     changeShapes(shuffledShapes)
-    const newStar = document.createElement('li');
-    newStar.innerHTML = '<i class="fa fa-star"></i>';
+    const newStar = '<li><i class="fa fa-star"></i></li>';
     const starList = document.querySelector('.stars');
     for(let i = stars.length ; i< 3 ; i++){
-      starList.appendChild(newStar);
+      starList.insertAdjacentHTML('beforeend', newStar);;
     }
     resetTimer();
 }
