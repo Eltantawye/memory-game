@@ -96,6 +96,7 @@ function checkCards(event){
           setTimeout(function(){
             firstCard.parentElement.classList.remove('open','show','not-matched');
             secondCard.parentElement.classList.remove('open','show','not-matched');
+            //fixed click 
             clickCondition=true;
           }, 1100);
         } // end else
